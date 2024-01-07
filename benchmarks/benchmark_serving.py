@@ -230,4 +230,5 @@ if __name__ == "__main__":
     parser.add_argument('--trust-remote-code', action='store_true',
                         help='trust remote code from huggingface')
     args = parser.parse_args()
+    args.num_prompts = int(args.request_rate * args.num_prompts)
     main(args)
