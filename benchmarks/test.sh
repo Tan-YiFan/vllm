@@ -14,8 +14,8 @@ for (( i = 0; i < 3; i ++ )); do
 		n=${ns[$i]}
 		# rate=${rates[$j]}
 		# rate=${rates[$(($i*3))+$j]}
-		rate=100
+		rate=25
 		echo $n $rate $dataset $model | tee -a test.log
-		numactl --cpubind=0 python3 benchmark_serving.py --tokenizer $model --dataset $dataset --best-of $n --request-rate=$rate --num-prompts 60 | tee -a test.log
+		python3 benchmark_serving.py --tokenizer $model --dataset $dataset --best-of $n --request-rate=$rate --num-prompts 20 | tee -a test.log
 	done
 done
