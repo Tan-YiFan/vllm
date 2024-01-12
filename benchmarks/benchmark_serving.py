@@ -64,8 +64,7 @@ def sample_requests(
     tokenized_dataset = []
     for i in range(len(dataset)):
         output_len = len(completion_token_ids[i])
-        if 'ShareGPT' not in dataset_path or output_len < 1024:
-            tokenized_dataset.append((prompts[i], prompt_token_ids[i], output_len))
+        tokenized_dataset.append((prompts[i], prompt_token_ids[i], output_len))
 
     # Filter out too long sequences.
     filtered_dataset: List[Tuple[str, int, int]] = []
@@ -76,7 +75,7 @@ def sample_requests(
             # This is because TGI causes errors when the input or output length
             # is too short.
             continue
-        if prompt_len > 1024 or prompt_len + output_len > 2048:
+        if prompt_len > 1024 or prompt_len + output_len > 2048 or output_len > 1536:
             # Prune too long sequences.
             continue
         filtered_dataset.append((prompt, prompt_len, output_len))
